@@ -1,0 +1,26 @@
+PUT http://127.0.0.1:8000/posts/2/
+content-type: application/json
+
+{
+  "comments": [ {
+            "text": "2demo_comment",
+            "user": 2
+        }]
+}
+
+###
+
+GET http://127.0.0.1:8000/posts/1/
+content-type: application/json
+
+###
+
+PATCH http://127.0.0.1:8000/posts/1/
+content-type: application/json
+
+{
+  "comments": [ {
+            "id": 1,
+            "text": "2demo_comment"
+        }]
+}
