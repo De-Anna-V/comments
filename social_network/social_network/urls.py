@@ -16,16 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from rest_framework.routers import DefaultRouter
-from posts.views import PostViewSet, CommentViewSet, posts_list_view, comments_list_view
+from posts import views
+from posts.views import LikeViewSet, CommentViewSet, AddLikeView
 
-r = DefaultRouter()
-r.register('posts', PostViewSet)
-r.register('comments', CommentViewSet)
+from rest_framework.routers import DefaultRouter
+ 
+router = DefaultRouter()
+router.register('likes', LikeViewSet, basename='likes')
+router.register('comments', CommentViewSet, basename='posts') 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('all_posts/', posts_list_view),
-    path('all_comments/', comments_list_view),
-] + r.urls
-
+    path('posts/', views.PostListView.as_view(), name='PostListView'),
+    path('posts/<int:pk>/', views.PostDetailView.as_view(), name='PostDetailView'),
+    path('posts/<int:post_id>/like/', AddLikeView.as_view(), name='add_like'),
+] + router.urls
